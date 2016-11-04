@@ -19,7 +19,7 @@ Prior to installing the PyQt4 cookiecutter, the cookiecutter package must be ins
 
 With cookiecutter installed, the PyQt4 cookiecutter template can be installed with::
 
-    $ cookiecutter https://github.com/mandeep/cookiecutter-pyqt4.git
+    $ cookiecutter https://github.com/aeroaks/cookiecutter-pyqt4.git
 
 Once cookiecutter clones the template, the user will be asked a series of questions related to their
 project::
