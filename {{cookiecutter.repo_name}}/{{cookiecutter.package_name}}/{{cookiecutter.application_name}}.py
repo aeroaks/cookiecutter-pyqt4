@@ -14,8 +14,9 @@ import json
 import logging
 import configparser as cp
 
-from PyQt4 import QtCore
 from PyQt4 import QtGui
+from PyQt4 import QtCore
+from PyQt4.QtCore import Qt
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -30,8 +31,8 @@ class MainWindow(QtGui.QMainWindow):
         self.setWindowTitle('{{ cookiecutter.application_title }}')
         self.gui_ver = ver
 
-        self.widget = QWidget()
-        self.layout = QHBoxLayout(self.widget)
+        self.widget = QtGui.QWidget()
+        self.layout = QtGui.QHBoxLayout(self.widget)
 
         self.menu_bar = self.menuBar()
         self.about_dialog = AboutDialog()
@@ -49,12 +50,12 @@ class MainWindow(QtGui.QMainWindow):
         file dialog."""
         self.file_sub_menu = self.menu_bar.addMenu('File')
 
-        self.open_action = QAction('Open File', self)
+        self.open_action = QtCore.QAction('Open File', self)
         self.open_action.setStatusTip('Open a file into {{ cookiecutter.application_title }}.')
         self.open_action.setShortcut('CTRL+O')
         self.open_action.triggered.connect(self.open_file)
 
-        self.exit_action = QAction('Exit Application', self)
+        self.exit_action = QtCore.QAction('Exit Application', self)
         self.exit_action.setStatusTip('Exit the application.')
         self.exit_action.setShortcut('CTRL+Q')
         self.exit_action.triggered.connect(lambda: QApplication.quit())
@@ -66,7 +67,7 @@ class MainWindow(QtGui.QMainWindow):
         """"""
         self.help_sub_menu = self.menu_bar.addMenu('Help')
 
-        self.about_action = QAction('About', self)
+        self.about_action = QtCore.QAction('About', self)
         self.about_action.setStatusTip('About the application.')
         self.about_action.setShortcut('CTRL+H')
         self.about_action.triggered.connect(lambda: self.about_dialog.exec_())
@@ -74,13 +75,13 @@ class MainWindow(QtGui.QMainWindow):
         self.help_sub_menu.addAction(self.about_action)
     {% if cookiecutter.insert_toolbar == 'yes' %}
     def tool_bar_items(self):
-        self.tool_bar = QToolBar()
+        self.tool_bar = QtGui.QToolBar()
         self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
         self.tool_bar.setMovable(False)
 
         open_icon = pkg_resources.resource_filename('{{ cookiecutter.package_name }}.images',
                                                     'ic_open_in_new_black_48dp_1x.png')
-        tool_bar_open_action = QAction(QIcon(open_icon), 'Open File', self)
+        tool_bar_open_action = QtCore.QAction(QIcon(open_icon), 'Open File', self)
         tool_bar_open_action.triggered.connect(self.open_file)
 
         self.tool_bar.addAction(tool_bar_open_action)
@@ -89,14 +90,14 @@ class MainWindow(QtGui.QMainWindow):
         """Opens a QFileDialog to allow the user to open a file into the application. The template
         creates the dialog and simply reads it with the context manager."""
 
-        filename, accepted = QFileDialog.getOpenFileName(self, 'Open File')
+        filename, accepted = QtGui.QFileDialog.getOpenFileName(self, 'Open File')
 
         if accepted:
             with open(filename) as file:
                 file.read()
 
 
-class AboutDialog(QDialog):
+class AboutDialog(QtGui.QDialog):
     """Contains the necessary elements to show helpful text in a dialog."""
 
     def __init__(self, parent=None):
@@ -106,28 +107,23 @@ class AboutDialog(QDialog):
         self.setWindowTitle('About')
         self.resize(300, 200)
 
-        author = QLabel('{{ cookiecutter.full_name }}')
+        author = QtGui.QLabel('{{ cookiecutter.full_name }}')
         author.setAlignment(Qt.AlignCenter)
 
-        icons = QLabel('Material design icons created by Google')
-        icons.setAlignment(Qt.AlignCenter)
-
-        github = QLabel('GitHub: {{ cookiecutter.github_username }}')
+        github = QtGui.QLabel('GitHub: {{ cookiecutter.github_username }}')
         github.setAlignment(Qt.AlignCenter)
 
-        self.layout = QVBoxLayout()
+        self.layout = QtGui.QVBoxLayout()
         self.layout.setAlignment(Qt.AlignVCenter)
 
         self.layout.addWidget(author)
-        self.layout.addWidget(icons)
-        self.layout.addWidget(github)
 
         self.setLayout(self.layout)
 
 
 def main():
-    application = QApplication(sys.argv)
-    window = {{ cookiecutter.application_title }}()
+    application = QtGui.QApplication(sys.argv)
+    window = MainWindow()
     desktop = QDesktopWidget().availableGeometry()
     width = (desktop.width() - window.width()) / 2
     height = (desktop.height() - window.height()) / 2

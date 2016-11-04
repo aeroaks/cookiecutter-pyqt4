@@ -28,7 +28,7 @@ def init_logging():
 def get_version_number():
     # get version number from changelog.rst
     ver_num = ''
-    with open('CHANGELOG.md', 'r') as f:
+    with open('CHANGELOG.rst', 'r') as f:
         for f_line in f.readlines()[::-1]:
             if f_line.startswith('v'):
                 ver_num = f_line[1:]
@@ -43,7 +43,7 @@ if __name__ == "__main__":
         os.remove(f)
 
     _logger = init_logging()
-    logging.debug('Starting {} GUI'.format({{cookiecutter.application_title}}))
+    logging.debug('Starting {} GUI'.format('{{cookiecutter.application_title}}')
 
     ver_num = get_version_number()
 
