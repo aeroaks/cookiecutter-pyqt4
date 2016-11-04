@@ -1,25 +1,34 @@
-# -*- coding: utf-8 -*-
-import pkg_resources
-import sys
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import (QAction, QApplication, QDesktopWidget, QDialog, QFileDialog,
-                             QGroupBox, QHBoxLayout, QLabel, QMainWindow, QMenuBar, QStatusBar,
-                             QToolBar, QVBoxLayout, QWidget)
+"""
+main_window
+
+Author: {{ cookiecutter.full_name }}
+Date: mm-yyyy
+
+Main window for {{ cookiecutter.package_name }}
+All processing to be done in threads using signal/slot
+
+"""
+
+import os
+import json
+import logging
+import configparser as cp
+
+from PyQt4 import QtCore
+from PyQt4 import QtGui
 
 
-class {{ cookiecutter.application_title }}(QMainWindow):
+class MainWindow(QtGui.QMainWindow):
     """Creates the main window that stores all of the widgets necessary for the application."""
 
-    def __init__(self, parent=None):
+    def __init__(self, ver, parent=None):
         """Initializes the window size and title and instantiates the menu bar and status bar
         if selected by the user."""
-        super({{ cookiecutter.application_title }}, self).__init__(parent)
-        self.resize(1024, 768)
+        super().__init__()
+        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)  # Prevents an error message about QtTimers.
+        # settings: directory, mode etc
         self.setWindowTitle('{{ cookiecutter.application_title }}')
-        window_icon = pkg_resources.resource_filename('{{ cookiecutter.package_name }}.images',
-                                                      'ic_insert_drive_file_black_48dp_1x.png')
-        self.setWindowIcon(QIcon(window_icon))
+        self.gui_ver = ver
 
         self.widget = QWidget()
         self.layout = QHBoxLayout(self.widget)
@@ -75,7 +84,7 @@ class {{ cookiecutter.application_title }}(QMainWindow):
         tool_bar_open_action.triggered.connect(self.open_file)
 
         self.tool_bar.addAction(tool_bar_open_action)
-    {% endif %}    
+    {% endif %}
     def open_file(self):
         """Opens a QFileDialog to allow the user to open a file into the application. The template
         creates the dialog and simply reads it with the context manager."""
@@ -92,12 +101,9 @@ class AboutDialog(QDialog):
 
     def __init__(self, parent=None):
         """Displays a dialog that shows application information."""
-        super(AboutDialog, self).__init__(parent)
+        super().__init__()
 
         self.setWindowTitle('About')
-        help_icon = pkg_resources.resource_filename('{{ cookiecutter.package_name }}.images',
-                                                    'ic_help_black_48dp_1x.png')
-        self.setWindowIcon(QIcon(help_icon))
         self.resize(300, 200)
 
         author = QLabel('{{ cookiecutter.full_name }}')
