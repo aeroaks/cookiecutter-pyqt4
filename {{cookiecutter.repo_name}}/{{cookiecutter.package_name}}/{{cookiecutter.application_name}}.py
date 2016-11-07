@@ -26,7 +26,7 @@ class MainWindow(QtGui.QMainWindow):
         """Initializes the window size and title and instantiates the menu bar and status bar
         if selected by the user."""
         super().__init__()
-        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)  # Prevents an error message about QtTimers.
+        self.setAttribute(Qt.WA_DeleteOnClose)  # Prevents an error message about QtTimers.
         # settings: directory, mode etc
         self.setWindowTitle('{{ cookiecutter.application_title }}')
         self.gui_ver = ver
@@ -50,15 +50,15 @@ class MainWindow(QtGui.QMainWindow):
         file dialog."""
         self.file_sub_menu = self.menu_bar.addMenu('File')
 
-        self.open_action = QtCore.QAction('Open File', self)
+        self.open_action = QtGui.QAction('Open File', self)
         self.open_action.setStatusTip('Open a file into {{ cookiecutter.application_title }}.')
         self.open_action.setShortcut('CTRL+O')
         self.open_action.triggered.connect(self.open_file)
 
-        self.exit_action = QtCore.QAction('Exit Application', self)
+        self.exit_action = QtGui.QAction('Exit Application', self)
         self.exit_action.setStatusTip('Exit the application.')
         self.exit_action.setShortcut('CTRL+Q')
-        self.exit_action.triggered.connect(lambda: QApplication.quit())
+        self.exit_action.triggered.connect(lambda: QtGui.QApplication.quit())
 
         self.file_sub_menu.addAction(self.open_action)
         self.file_sub_menu.addAction(self.exit_action)
@@ -67,7 +67,7 @@ class MainWindow(QtGui.QMainWindow):
         """"""
         self.help_sub_menu = self.menu_bar.addMenu('Help')
 
-        self.about_action = QtCore.QAction('About', self)
+        self.about_action = QtGui.QAction('About', self)
         self.about_action.setStatusTip('About the application.')
         self.about_action.setShortcut('CTRL+H')
         self.about_action.triggered.connect(lambda: self.about_dialog.exec_())
@@ -81,7 +81,7 @@ class MainWindow(QtGui.QMainWindow):
 
         open_icon = pkg_resources.resource_filename('{{ cookiecutter.package_name }}.images',
                                                     'ic_open_in_new_black_48dp_1x.png')
-        tool_bar_open_action = QtCore.QAction(QIcon(open_icon), 'Open File', self)
+        tool_bar_open_action = QtGui.QAction(QIcon(open_icon), 'Open File', self)
         tool_bar_open_action.triggered.connect(self.open_file)
 
         self.tool_bar.addAction(tool_bar_open_action)
@@ -90,11 +90,15 @@ class MainWindow(QtGui.QMainWindow):
         """Opens a QFileDialog to allow the user to open a file into the application. The template
         creates the dialog and simply reads it with the context manager."""
 
-        filename, accepted = QtGui.QFileDialog.getOpenFileName(self, 'Open File')
+        file_select_out = QtGui.QFileDialog.getOpenFileName(self, 'Open File')
 
-        if accepted:
-            with open(filename) as file:
-                file.read()
+        # if file dialog used to select a file
+        if file_select_out:
+            filename, accepted = file_select_out
+
+            if accepted:
+                with open(filename) as file:
+                    file.read()
 
 
 class AboutDialog(QtGui.QDialog):
@@ -114,9 +118,11 @@ class AboutDialog(QtGui.QDialog):
         github.setAlignment(Qt.AlignCenter)
 
         self.layout = QtGui.QVBoxLayout()
-        self.layout.setAlignment(Qt.AlignVCenter)
+        self.layout.setAlignme
+        nt(Qt.AlignVCenter)
 
         self.layout.addWidget(author)
+        self.layout.addWidget(github)
 
         self.setLayout(self.layout)
 
