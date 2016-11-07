@@ -45,7 +45,7 @@ class MainWindow(QtGui.QMainWindow):
         self.file_menu()
         self.help_menu()
 
-        {% if cookiecutter.insert_toolbar == 'yes'- %}
+        {% if cookiecutter.insert_toolbar == 'yes' -%}
         self.tool_bar_items()
         {%- endif %}
     def file_menu(self):
@@ -89,7 +89,7 @@ class MainWindow(QtGui.QMainWindow):
 
         self.tool_bar.addAction(tool_bar_open_action)
     {%- endif %}
-    
+
     def open_file(self):
         """Open a QFileDialog to allow the user to open a file into the application."""
 
