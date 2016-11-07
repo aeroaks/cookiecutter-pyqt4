@@ -48,6 +48,7 @@ class MainWindow(QtGui.QMainWindow):
         {% if cookiecutter.insert_toolbar == 'yes' -%}
         self.tool_bar_items()
         {%- endif %}
+
     def file_menu(self):
         """Create a file submenu with an Open File item that opens a file dialog."""
         self.file_sub_menu = self.menu_bar.addMenu('File')
@@ -121,8 +122,7 @@ class AboutDialog(QtGui.QDialog):
         github.setAlignment(Qt.AlignCenter)
 
         self.layout = QtGui.QVBoxLayout()
-        self.layout.setAlignme
-        nt(Qt.AlignVCenter)
+        self.layout.setAlignment(Qt.AlignVCenter)
 
         self.layout.addWidget(author)
         self.layout.addWidget(github)
