@@ -1,4 +1,4 @@
-Cookiecutter-PyQt5 is a Cookiecutter_ template that assists users in their creation of GUI applications.
+Cookiecutter-PyQt4 is a Cookiecutter_ template that assists users in their creation of GUI applications.
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 

@@ -43,8 +43,12 @@ if __name__ == "__main__":
         os.remove(f)
 
     _logger = init_logging()
+<<<<<<< HEAD
     logging.debug('Starting {} GUI'.format(
         '{{cookiecutter.application_title}}'))
+=======
+    logging.debug('Starting {} GUI'.format('{{cookiecutter.application_title}}'))
+>>>>>>> origin/master
 
     ver_num = get_version_number()
 
