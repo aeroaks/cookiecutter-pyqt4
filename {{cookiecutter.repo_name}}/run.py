@@ -7,7 +7,7 @@ import logging
 import warnings
 
 from PyQt4 import QtGui
-from PyQt4 import QtCore.Qt.QDesktopWidget
+from PyQt4.QtCore.Qt import QDesktopWidget
 
 from settings.setup_logging import setup_logging
 from {{cookiecutter.package_name}}.main_window import MainWindow
