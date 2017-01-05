@@ -9,6 +9,10 @@
 
 {{ cookiecutter.project_short_description }}
 
+Use run.py to run the GUI instance.
+{{cookiecutter.application_name}}.py contains UI elements handling code for the whole window.
+worker/main_worker.py contains all the logic and UI element handling for the {{cookiecutter.application_name}}.py
+Logging can be used to create log of the GUI session. Log files are erased when a new session is started.
 
 Features
 --------
@@ -22,4 +26,3 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-

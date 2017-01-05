@@ -1,5 +1,6 @@
 {
     "full_name": "user",
+    "creation_date": "(mm-yyyy",
     "email": "info@user.xyz",
     "github_username": "user_git",
     "repo_name": "cookiecutter_PyQt4",
@@ -8,6 +9,7 @@
     "application_title": "Main Window Title",
     "project_short_description": "A PyQt4 GUI application",
     "version": "v0.0.1",
+    "insert_menubar": "no",
     "insert_toolbar": "no",
     "insert_statusbar": "yes"
 }

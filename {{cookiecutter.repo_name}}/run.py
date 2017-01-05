@@ -7,6 +7,7 @@ import logging
 import warnings
 
 from PyQt4 import QtGui
+from PyQt4 import QtCore.Qt.QDesktopWidget
 
 from settings.setup_logging import setup_logging
 from {{cookiecutter.package_name}}.main_window import MainWindow
@@ -49,5 +50,9 @@ if __name__ == "__main__":
 
     app = QtGui.QApplication(sys.argv)
     ex = MainWindow(ver_num)
-    ex.showMaximized()
+    desktop = QDesktopWidget().availableGeometry()
+    width = (desktop.width() - window.width()) / 2
+    height = (desktop.height() - window.height()) / 2
+    ex.show()
+    ex.move(width, height)
     sys.exit(app.exec_())

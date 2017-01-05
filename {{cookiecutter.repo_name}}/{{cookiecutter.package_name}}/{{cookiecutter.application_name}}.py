@@ -2,7 +2,7 @@
 main_window
 
 Author: {{ cookiecutter.full_name }}
-Date: mm-yyyy
+Date: {{ cookiecutter.creation_date }}
 
 Main window for {{ cookiecutter.package_name }}
 All processing to be done in threads using signal/slot
@@ -17,6 +17,8 @@ import configparser as cp
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 from PyQt4.QtCore import Qt
+
+from {{ cookiecutter.package_name }}.worker.main_worker import MainWorker
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -34,8 +36,10 @@ class MainWindow(QtGui.QMainWindow):
         self.widget = QtGui.QWidget()
         self.layout = QtGui.QHBoxLayout(self.widget)
 
+        {% if cookiecutter.insert_menubar == 'yes' -%}
         self.menu_bar = self.menuBar()
         self.about_dialog = AboutDialog()
+        {%- endif %}
 
         {% if cookiecutter.insert_statusbar == 'yes' -%}
         self.status_bar = self.statusBar()
@@ -45,10 +49,28 @@ class MainWindow(QtGui.QMainWindow):
         self.file_menu()
         self.help_menu()
 
+        self.worker = MainWorker(self)
+        self.worker.init_worker()
+
         {% if cookiecutter.insert_toolbar == 'yes' -%}
         self.tool_bar_items()
         {%- endif %}
 
+    {% if cookiecutter.insert_toolbar == 'yes' -%}
+    def tool_bar_items(self):
+        self.tool_bar = QtGui.QToolBar()
+        self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
+        self.tool_bar.setMovable(False)
+
+        open_icon = pkg_resources.resource_filename('{{ cookiecutter.package_name }}.images',
+                                                    'ic_open_in_new_black_48dp_1x.png')
+        tool_bar_open_action = QtGui.QAction(QIcon(open_icon), 'Open File', self)
+        tool_bar_open_action.triggered.connect(self.open_file)
+
+        self.tool_bar.addAction(tool_bar_open_action)
+    {%- endif %}
+
+    {% if cookiecutter.insert_statusbar == 'yes' -%}
     def file_menu(self):
         """Create a file submenu with an Open File item that opens a file dialog."""
         self.file_sub_menu = self.menu_bar.addMenu('File')
@@ -77,20 +99,6 @@ class MainWindow(QtGui.QMainWindow):
 
         self.help_sub_menu.addAction(self.about_action)
 
-    {% if cookiecutter.insert_toolbar == 'yes' -%}
-    def tool_bar_items(self):
-        self.tool_bar = QtGui.QToolBar()
-        self.addToolBar(Qt.TopToolBarArea, self.tool_bar)
-        self.tool_bar.setMovable(False)
-
-        open_icon = pkg_resources.resource_filename('{{ cookiecutter.package_name }}.images',
-                                                    'ic_open_in_new_black_48dp_1x.png')
-        tool_bar_open_action = QtGui.QAction(QIcon(open_icon), 'Open File', self)
-        tool_bar_open_action.triggered.connect(self.open_file)
-
-        self.tool_bar.addAction(tool_bar_open_action)
-    {%- endif %}
-
     def open_file(self):
         """Open a QFileDialog to allow the user to open a file into the application."""
 
@@ -103,8 +111,9 @@ class MainWindow(QtGui.QMainWindow):
             if accepted:
                 with open(filename) as file:
                     file.read()
+    {%- endif %}
 
-
+{% if cookiecutter.insert_statusbar == 'yes' -%}
 class AboutDialog(QtGui.QDialog):
     """Contains the necessary elements to show helpful text in a dialog."""
 
@@ -128,14 +137,4 @@ class AboutDialog(QtGui.QDialog):
         self.layout.addWidget(github)
 
         self.setLayout(self.layout)
-
-
-def main():
-    application = QtGui.QApplication(sys.argv)
-    window = MainWindow()
-    desktop = QDesktopWidget().availableGeometry()
-    width = (desktop.width() - window.width()) / 2
-    height = (desktop.height() - window.height()) / 2
-    window.show()
-    window.move(width, height)
-    sys.exit(application.exec_())
+{%- endif %}
