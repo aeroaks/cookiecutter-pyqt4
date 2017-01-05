@@ -1,6 +1,6 @@
 {
     "full_name": "user",
-    "creation_date": "(mm-yyyy",
+    "creation_date": "mm-yyyy",
     "email": "info@user.xyz",
     "github_username": "user_git",
     "repo_name": "cookiecutter_PyQt4",

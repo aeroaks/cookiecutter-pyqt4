@@ -2,7 +2,7 @@
 main_worker
 
 Author: {{ cookiecutter.full_name }}
-Date: mm-yyyy
+Date: {{ cookiecutter.creation_date }}
 
 Main worker for handling processing and threaded communication for GUI
 All processing to be done in threads using signal/slot
