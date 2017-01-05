@@ -55,3 +55,8 @@ Usage
 With the questions during installation answered, the user will have a fully functioning Python project
 in their current working directory. This package will contain a GUI application template in the package
 directory as well as a test suite in the package's tests folder. All the user needs to finish coding is the rest of their GUI application and related tests.
+
+Use run.py to run the GUI instance.
+application_name python file contains UI elements handling code for the whole window.
+worker/main_worker.py contains all the logic and UI element handling for the application_name python file
+Logging can be used to create log of the GUI session. Log files are erased when a new session is started.

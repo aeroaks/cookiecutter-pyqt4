@@ -39,15 +39,15 @@ class MainWindow(QtGui.QMainWindow):
         {% if cookiecutter.insert_menubar == 'yes' -%}
         self.menu_bar = self.menuBar()
         self.about_dialog = AboutDialog()
+
+        self.file_menu()
+        self.help_menu()
         {%- endif %}
 
         {% if cookiecutter.insert_statusbar == 'yes' -%}
         self.status_bar = self.statusBar()
         self.status_bar.showMessage('Ready', 5000)
         {%- endif %}
-
-        self.file_menu()
-        self.help_menu()
 
         self.worker = MainWorker(self)
         self.worker.init_worker()
