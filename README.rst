@@ -10,6 +10,8 @@ Features
 * Continuous integration with pre-built .travis.yml for Travis CI
 * Pre-assembled Pytest test suite with inclusion of pytest-qt and pytest-xvfb to enhance test experience
 
+* UI folder contains UI related data (images, icons) and UI elements used in main window
+
 Installation
 ------------
 

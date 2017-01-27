@@ -19,6 +19,8 @@ from PyQt4 import QtCore
 from PyQt4.QtCore import Qt
 
 from {{ cookiecutter.package_name }}.worker.main_worker import MainWorker
+from {{ cookiecutter.package_name }}.ui.main_widget import MainWidget
+from {{ cookiecutter.package_name }}.ui.dialogs import AboutDialog
 
 
 class MainWindow(QtGui.QMainWindow):
@@ -33,8 +35,11 @@ class MainWindow(QtGui.QMainWindow):
         self.setWindowTitle('{{ cookiecutter.application_title }}')
         self.gui_ver = ver
 
-        self.widget = QtGui.QWidget()
-        self.layout = QtGui.QHBoxLayout(self.widget)
+        self.widget = MainWidget(self)
+        self.setCentralWidget(self.widget)
+
+        self.worker = MainWorker(self)
+        self.worker.init_worker()
 
         {% if cookiecutter.insert_menubar == 'yes' -%}
         self.menu_bar = self.menuBar()
@@ -43,15 +48,10 @@ class MainWindow(QtGui.QMainWindow):
         self.file_menu()
         self.help_menu()
         {%- endif %}
-
         {% if cookiecutter.insert_statusbar == 'yes' -%}
         self.status_bar = self.statusBar()
         self.status_bar.showMessage('Ready', 5000)
         {%- endif %}
-
-        self.worker = MainWorker(self)
-        self.worker.init_worker()
-
         {% if cookiecutter.insert_toolbar == 'yes' -%}
         self.tool_bar_items()
         {%- endif %}
@@ -112,29 +112,3 @@ class MainWindow(QtGui.QMainWindow):
                 with open(filename) as file:
                     file.read()
     {%- endif %}
-
-{% if cookiecutter.insert_statusbar == 'yes' -%}
-class AboutDialog(QtGui.QDialog):
-    """Contains the necessary elements to show helpful text in a dialog."""
-
-    def __init__(self, parent=None):
-        """Displays a dialog that shows application information."""
-        super().__init__()
-
-        self.setWindowTitle('About')
-        self.resize(300, 200)
-
-        author = QtGui.QLabel('{{ cookiecutter.full_name }}')
-        author.setAlignment(Qt.AlignCenter)
-
-        github = QtGui.QLabel('GitHub: {{ cookiecutter.github_username }}')
-        github.setAlignment(Qt.AlignCenter)
-
-        self.layout = QtGui.QVBoxLayout()
-        self.layout.setAlignment(Qt.AlignVCenter)
-
-        self.layout.addWidget(author)
-        self.layout.addWidget(github)
-
-        self.setLayout(self.layout)
-{%- endif %}
