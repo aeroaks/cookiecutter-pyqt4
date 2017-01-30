@@ -20,7 +20,7 @@ def init_logging():
 
     # setup logging - output to log tab, status message, dialogs
     setup_logging(os.path.join(os.path.abspath(os.path.curdir),
-                               'settings\\logging.json'))
+                               'gui_logging\\logging.json'))
     _logger = logging.getLogger(__name__)
     return _logger
 
