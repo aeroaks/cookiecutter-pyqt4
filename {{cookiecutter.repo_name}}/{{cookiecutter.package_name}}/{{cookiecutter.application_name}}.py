@@ -70,7 +70,7 @@ class MainWindow(QtGui.QMainWindow):
         self.tool_bar.addAction(tool_bar_open_action)
     {%- endif %}
 
-    {% if cookiecutter.insert_statusbar == 'yes' -%}
+    {% if cookiecutter.insert_menubar == 'yes' -%}
     def file_menu(self):
         """Create a file submenu with an Open File item that opens a file dialog."""
         self.file_sub_menu = self.menu_bar.addMenu('File')
