@@ -1,11 +1,11 @@
 import os
 import json
+import logging
 from collections import OrderedDict
 
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 
-from src.ep_widgets import *
 
 class MainWidget(QtGui.QWidget):
     """Class for displaying osa registration related ui elements."""

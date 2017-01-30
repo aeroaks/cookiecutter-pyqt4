@@ -8,7 +8,7 @@ import warnings
 
 from PyQt4 import QtGui
 
-from settings.setup_logging import setup_logging
+from gui_logging.setup_logging import setup_logging
 from {{cookiecutter.package_name}}.main_window import MainWindow
 
 warnings.simplefilter(action="ignore", category=RuntimeWarning)
